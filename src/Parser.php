@@ -36,9 +36,8 @@ class Parser
 
     public function keywords($text, $amount = 10, $ignore = [])
     {
-        $text = preg_replace("@\s+@ms", ' ', $text);
         $text = strip_tags($text);
-        $words = explode(' ', $text);
+        $words = preg_split("@[,\./\\!\@#$%^&*()\?]*\s+@", $text);
         $cntlc = [];
         $cnt = [];
         $normalize = function ($str) {
