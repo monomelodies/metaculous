@@ -1,0 +1,9 @@
+site_name: Metaculous documentation
+pages:
+- Home:
+    - 'Quickstart': 'index.md'
+- API reference:
+    - 'Parser': 'api/parser.md'
+    - 'TwigExtension': 'api/twig.md'
+
+theme: united
