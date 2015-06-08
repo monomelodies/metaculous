@@ -56,7 +56,7 @@ class Parser
             if (!isset($cntlc[$lcword])) {
                 $cntlc[$lcword] = 0;
             }
-            $cntlc[$word] += $weight;
+            $cntlc[$lcword] += $weight;
         }
         arsort($cnt);
         arsort($cntlc);
