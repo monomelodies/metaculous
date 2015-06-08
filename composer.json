@@ -1,0 +1,24 @@
+{
+    "name": "monomelodies/metaculous",
+    "description": "Metadata helpers",
+    "keywords": ["PHP","template","twig","metadata","description","keywords"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marijn Ophorst",
+            "email": "marijn@monomelodies.nl"
+        }
+    ],
+    "require": {
+        "twig/twig": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=4",
+        "phpunit/dbunit": ">=1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Metaculous\\": "src"
+        }
+    }
+}
