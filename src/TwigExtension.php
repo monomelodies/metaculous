@@ -18,14 +18,15 @@ class TwigExtension extends Twig_Extension
         return [
             new Twig_SimpleFilter(
                 'metaculous_description',
-                function ($text) use ($parser) {
-                    return $parser->description($text);
-                }
+                [$parser, 'description']
             ),
             new Twig_SimpleFilter(
                 'metaculous_keywords',
-                function ($text) use ($parser) {
-                    return implode(', ', $parser->keywords($text));
+                function ($text, $amount = 10, $ignore = []) use ($parser) {
+                    return implode(
+                        ', ',
+                        $parser->keywords($text, $amount, $ignore)
+                    );
                 }
             ),
         ];
