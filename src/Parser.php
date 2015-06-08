@@ -37,23 +37,24 @@ class Parser
     public function keywords($text, $amount = 10, $ignore = [])
     {
         $text = preg_replace("@\s+@ms", ' ', $text);
-        $text = htmlentities(strip_tags($text));
-        $text = preg_replace('@&([a-z])[a-z]+?;@', '$1', $text);
-        $text = trim(preg_replace('@[^\w\s-]@', '', $text));
+        $text = strip_tags($text);
         $words = explode(' ', $text);
         $cntlc = [];
         $cnt = [];
-        $ignore = array_map('strtolower', $ignore);
+        $normalize = function ($str) {
+            return iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+        };
+        $ignore = array_map($normalize, $ignore);
         foreach ($words as $word) {
-            $lcword = strtolower($word);
+            $lcword = $normalize($word);
             if (in_array($lcword, $ignore)) {
                 continue;
             }
-            $weight = log(strlen($word) + ($word == $lcword ? 0 : 1));
+            $weight = log(strlen($lcword));
             if (!isset($cnt[$word])) {
                 $cnt[$word] = 0;
             }
-            $cnt[$word] += $weight;
+            $cnt[$word] += $weight + ($lcword == $word ? 0 : 1);
             if (!isset($cntlc[$lcword])) {
                 $cntlc[$lcword] = 0;
             }
@@ -65,7 +66,7 @@ class Parser
         $keywords = [];
         foreach ($popular as $word) {
             foreach ($cnt as $spelling => $counted) {
-                if (strtolower($spelling) == $word) {
+                if ($normalize($spelling) == $word) {
                     $keywords[] = $spelling;
                     continue 2;
                 }
