@@ -36,9 +36,9 @@ EOT;
         $cnt = 8;
         echo $twig->render('test.html', compact('text', 'ignore', 'cnt'));
         $this->expectOutputString(<<<EOT
-<meta name="keywords" content="tortor, placerat, quis, malesuada, sodales, nec, faucibus, ac, Pellentesque, consectetur">
+<meta name="keywords" content="tortor, malesuada, placerat, nisl, quis, faucibus, nec, sodales, vitae, consectetur">
 <meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, nam rhoncus consectetur arcu non sodales - interdum et malesuada fames ac ante ipsum primis in...">
-<meta name="keywords" content="tortor, placerat, malesuada, sodales, nec, faucibus, ac, Pellentesque">
+<meta name="keywords" content="tortor, malesuada, placerat, faucibus, nec, sodales, vitae, consectetur">
 <meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, nam rhoncus consectetur arcu non sodales - interdum et malesuada fames ac ante ipsum primis in...">
 
 EOT
