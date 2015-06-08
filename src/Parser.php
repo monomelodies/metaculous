@@ -43,12 +43,13 @@ class Parser
         $words = explode(' ', $text);
         $cntlc = [];
         $cnt = [];
+        $ignore = array_map('strtolower', $ignore);
         foreach ($words as $word) {
-            $weight = log(strlen($word));
             $lcword = strtolower($word);
             if (in_array($lcword, $ignore)) {
                 continue;
             }
+            $weight = log(strlen($word) + ($word == $lcword ? 0 : 1));
             if (!isset($cnt[$word])) {
                 $cnt[$word] = 0;
             }
@@ -66,6 +67,7 @@ class Parser
             foreach ($cnt as $spelling => $counted) {
                 if (strtolower($spelling) == $word) {
                     $keywords[] = $spelling;
+                    continue 2;
                 }
             }
         }
