@@ -7,12 +7,12 @@ class Parser
     /**
      * Extract optimum meta description from $text, following best practices.
      *
-     * - max ~155 chars
+     * - max $length chars (default: 155)
      * - 25-30 words
      * - max 2 sentences
      * - no HTML
      */
-    public function description($text)
+    public function description($text, $length = 155)
     {
         $text = strip_tags($text);
         $text = trim(preg_replace("@\s+@ms", ' ', $text));
@@ -34,7 +34,7 @@ class Parser
         return $text;
     }
 
-    public function keywords($text)
+    public function keywords($text, $amount = 10, $ignore = [])
     {
         $text = preg_replace("@\s+@ms", ' ', $text);
         $text = htmlentities(strip_tags($text));
@@ -45,22 +45,25 @@ class Parser
         $cnt = [];
         foreach ($words as $word) {
             $weight = log(strlen($word));
+            $lcword = strtolower($word);
+            if (in_array($lcword, $ignore)) {
+                continue;
+            }
             if (!isset($cnt[$word])) {
                 $cnt[$word] = 0;
             }
             $cnt[$word] += $weight;
-            $word = strtolower($word);
-            if (!isset($cntlc[$word])) {
-                $cntlc[$word] = 0;
+            if (!isset($cntlc[$lcword])) {
+                $cntlc[$lcword] = 0;
             }
             $cntlc[$word] += $weight;
         }
         arsort($cnt);
         arsort($cntlc);
-        $popular = array_shift(array_chunk(array_keys($cnt), 10));
+        $popular = array_shift(array_chunk(array_keys($cntlc), $amount));
         $keywords = [];
         foreach ($popular as $word) {
-            foreach ($cntlc as $spelling => $cnt) {
+            foreach ($cnt as $spelling => $counted) {
                 if (strtolower($spelling) == $word) {
                     $keywords[] = $spelling;
                 }
