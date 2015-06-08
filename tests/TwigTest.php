@@ -22,20 +22,28 @@ Nam nec turpis sed ipsum venenatis convallis id eget nunc. Nam nec mauris ac dia
 
 EOT;
         $tpl = <<<EOT
-<meta name="keywords" content="{{ text|metaculous_keywords }}">
+<meta name="keywords" content="{{ text|metaculous_keywords(cnt, ignore) }}">
 <meta name="description" content="{{ text|metaculous_description }}">
 
 EOT;
         $loader = new Twig_Loader_Array(['test.html' => $tpl]);
         $twig = new Twig_Environment($loader, ['cache' => false]);
         $twig->addExtension(new Metaculous\TwigExtension);
-        echo $twig->render('test.html', compact('text'));
+        $ignore = [];
+        $cnt = 10;
+        echo $twig->render('test.html', compact('text', 'ignore', 'cnt'));
+        $ignore = ['nisl', 'quis', 'sed'];
+        $cnt = 8;
+        echo $twig->render('test.html', compact('text', 'ignore', 'cnt'));
         $this->expectOutputString(<<<EOT
-<meta name="keywords" content="tortor, malesuada, placerat, nisl, quis, faucibus, nec, sodales, vitae, consectetur">
+<meta name="keywords" content="tortor, malesuada, placerat, sed, Aliquam, Vestibulum, quis, nisl, faucibus, Pellentesque">
+<meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, nam rhoncus consectetur arcu non sodales - interdum et malesuada fames ac ante ipsum primis in...">
+<meta name="keywords" content="tortor, malesuada, placerat, Aliquam, Vestibulum, faucibus, Pellentesque, nec">
 <meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, nam rhoncus consectetur arcu non sodales - interdum et malesuada fames ac ante ipsum primis in...">
 
 EOT
         );
+
     }
 }
 
