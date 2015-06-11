@@ -4,7 +4,8 @@ Metadata helpers
 A few simple helpers to generically add metadata tag (description, keywords) to
 your HTML pages, based on page content.
 
-[Full documentation](http://metaculous.readthedocs.org)
+[Website](http://metaculous.monomelodies.nl)
+[Full documentation](http://metaculous.monomelodies.nl/docs)
 
 ## Installation
 
