@@ -4,6 +4,40 @@ namespace Metaculous;
 
 class Parser
 {
+    private $ignore = [];
+    private $rig = [];
+
+    /**
+     * Pass an array of words to ignore. The words are normalized automatically.
+     *
+     * @param array $words Array of words to ignore.
+     * @return void
+     */
+    public function ignore(array $words)
+    {
+        $this->ignore = array_map([$this, 'normalize'], $words);
+    }
+
+    /**
+     * Pass a hash of word/weight pairs to rig during keyword extraction. This
+     * is useful to automatically prefer certain words that may not easily show
+     * up otherwise, e.g. short words like "PHP".
+     *
+     * Note that rigged words do not necessarily appear in the keywords; if a
+     * rigged word isn't used at all, or its weight is still too low, it will
+     * simply be ignored.
+     *
+     * @param array $words Hash of words/weights to rig.
+     * @return void
+     */
+    public function rig(array $words)
+    {
+        $this->rig = [];
+        foreach ($words as $word => $weight) {
+            $this->rig[$this->normalize($word)] = $weight;
+        }
+    }
+
     /**
      * Extract optimum meta description from $text, following best practices.
      *
@@ -43,22 +77,24 @@ class Parser
         );
         $cntlc = [];
         $cnt = [];
-        $normalize = function ($str) {
-            return iconv('UTF-8', 'ASCII//TRANSLIT', $str);
-        };
-        $ignore = array_map($normalize, $ignore);
+        $ignore = array_map([$this, 'normalize'], $ignore);
+        $ignore = array_merge($ignore, $this->ignore);
         foreach ($words as $word) {
-            $lcword = $normalize($word);
+            $lcword = $this->normalize($word);
             if (in_array($lcword, $ignore)) {
                 continue;
             }
             $weight = log(strlen($lcword));
             if (!isset($cnt[$word])) {
-                $cnt[$word] = 0;
+                $cnt[$word] = isset($this->rig[$lcword]) ?
+                    $this->rig[$lcword] :
+                    0;
             }
             $cnt[$word] += $weight + ($lcword == $word ? 0 : 1);
             if (!isset($cntlc[$lcword])) {
-                $cntlc[$lcword] = 0;
+                $cntlc[$lcword] = isset($this->rig[$lcword]) ?
+                    $this->rig[$lcword] :
+                    0;
             }
             $cntlc[$lcword] += $weight;
         }
@@ -68,13 +104,18 @@ class Parser
         $keywords = [];
         foreach ($popular as $word) {
             foreach ($cnt as $spelling => $counted) {
-                if ($normalize($spelling) == $word) {
+                if ($this->normalize($spelling) == $word) {
                     $keywords[] = $spelling;
                     continue 2;
                 }
             }
         }
         return $keywords;
+    }
+
+    private function normalize($str)
+    {
+        return iconv('UTF-8', 'ASCII//TRANSLIT', $str);
     }
 }
 
