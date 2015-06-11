@@ -1,4 +1,7 @@
 site_name: Metaculous documentation
+site_url: http://metaculous.monomelodies.nl/docs/
+repo_url: https://github.com/monomelodies/metaculous
+
 pages:
 - Home:
     - 'Quickstart': 'index.md'
