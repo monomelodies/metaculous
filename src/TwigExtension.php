@@ -7,6 +7,15 @@ use Twig_SimpleFilter;
 
 class TwigExtension extends Twig_Extension
 {
+    private $parser;
+
+    public function __construct(array $ignore = [], array $rig = [])
+    {
+        $this->parser = new Parser;
+        $this->parser->ignore($ignore);
+        $this->parser->rig($rig);
+    }
+
     public function getName()
     {
         return 'metaculous';
@@ -14,18 +23,17 @@ class TwigExtension extends Twig_Extension
 
     public function getFilters()
     {
-        $parser = new Parser;
         return [
             new Twig_SimpleFilter(
                 'metaculous_description',
-                [$parser, 'description']
+                [$this->parser, 'description']
             ),
             new Twig_SimpleFilter(
                 'metaculous_keywords',
-                function ($text, $amount = 10, $ignore = []) use ($parser) {
+                function ($text, $amount = 10, $ignore = []) {
                     return implode(
                         ', ',
-                        $parser->keywords($text, $amount, $ignore)
+                        $this->parser->keywords($text, $amount, $ignore)
                     );
                 }
             ),
