@@ -6,4 +6,3 @@ pages:
     - 'Parser': 'api/parser.md'
     - 'TwigExtension': 'api/twig.md'
 
-theme: united
