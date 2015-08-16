@@ -72,7 +72,7 @@ class Parser
     {
         $text = strip_tags($text);
         $words = preg_split(
-            "@\W+@",
+            "@[^\w-]+@",
             $text
         );
         $cntlc = [];
