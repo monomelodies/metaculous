@@ -73,7 +73,7 @@ class Parser
         $text = strip_tags($text);
         $words = preg_split(
             "@[^\w-]+@",
-            $text
+            preg_replace('@(\s-|-\s)@ms', ' ', $text)
         );
         $cntlc = [];
         $cnt = [];
