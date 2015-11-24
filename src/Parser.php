@@ -45,23 +45,28 @@ class Parser
      * - 25-30 words
      * - max 2 sentences
      * - no HTML
+     *
+     * @param string $text The source text to work on.
+     * @param integer $length Maximum length to extract.
+     * @param integer $nrwords Maximum number of words to extract.
+     * @param integer $lines Maximum number of sentences to use.
      */
-    public function description($text, $length = 155)
+    public function description($text, $length = 155, $nrwords = 30, $lines = 2)
     {
         $text = strip_tags($text);
         $text = trim(preg_replace("@\s+@ms", ' ', $text));
         $sentences = preg_split(
             '@([\.!\?]+)@m',
             $text,
-            3,
+            $lines + 1,
             PREG_SPLIT_DELIM_CAPTURE
         );
-        if (count($sentences) == 5) {
+        if (count($sentences) == $lines + 3) {
             array_pop($sentences);
         }
         $text = implode('', $sentences);
         $words = explode(' ', $text);
-        while (count($words) > 30 || strlen($text) > 155) {
+        while (count($words) > $nrwords || strlen($text) > $length) {
             array_pop($words);
             $text = implode(' ', $words).'...';
         }
