@@ -70,7 +70,7 @@ class Parser
             array_pop($words);
             $text = implode(' ', $words).'...';
         }
-        return $text;
+        return trim($text);
     }
 
     public function keywords($text, $amount = 10, $ignore = [])
@@ -115,7 +115,7 @@ class Parser
                 }
             }
         }
-        return $keywords;
+        return trim($keywords);
     }
 
     private function normalize($str)
