@@ -110,12 +110,12 @@ class Parser
         foreach ($popular as $word) {
             foreach ($cnt as $spelling => $counted) {
                 if ($this->normalize($spelling) == $word) {
-                    $keywords[] = $spelling;
+                    $keywords[] = trim($spelling);
                     continue 2;
                 }
             }
         }
-        return trim($keywords);
+        return $keywords;
     }
 
     private function normalize($str)
