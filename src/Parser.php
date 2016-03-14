@@ -105,7 +105,8 @@ class Parser
         }
         arsort($cnt);
         arsort($cntlc);
-        $popular = array_shift(array_chunk(array_keys($cntlc), $amount));
+        $work = array_chunk(array_keys($cntlc), $amount);
+        $popular = array_shift($work);
         $keywords = [];
         foreach ($popular as $word) {
             foreach ($cnt as $spelling => $counted) {
