@@ -1,6 +1,6 @@
 <?php
 
-namespace Metaculous;
+namespace Monomelodies\Metaculous;
 
 use Twig_Extension;
 use Twig_SimpleFilter;

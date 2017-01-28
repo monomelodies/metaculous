@@ -1,6 +1,6 @@
 <?php
 
-namespace Metaculous;
+namespace Monomelodies\Metaculous;
 
 class Parser
 {
