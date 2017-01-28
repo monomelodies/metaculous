@@ -22,7 +22,7 @@ Nam nec turpis sed ipsum venenatis convallis id eget nunc. Nam nec mauris ac dia
 
 EOT;
         // Extract the top 10 words:
-        $parser = new Metaculous\Parser;
+        $parser = new Monomelodies\Metaculous\Parser;
         $parser->rig(['ut' => 1000]);
         $keywords = $parser->keywords($text);
         $this->assertTrue($keywords[0] == 'ut');

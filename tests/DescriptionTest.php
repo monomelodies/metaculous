@@ -25,7 +25,7 @@ EOT;
         // - max ~155 chars
         // - 25-30 words
         // - 2 sentences
-        $parser = new Metaculous\Parser;
+        $parser = new Monomelodies\Metaculous\Parser;
         $description = $parser->description($text);
         $this->assertTrue(strlen($description) <= 155);
         $this->assertTrue(str_word_count($description) <= 30);

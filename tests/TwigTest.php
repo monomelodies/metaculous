@@ -28,7 +28,7 @@ EOT;
 EOT;
         $loader = new Twig_Loader_Array(['test.html' => $tpl]);
         $twig = new Twig_Environment($loader, ['cache' => false]);
-        $twig->addExtension(new Metaculous\TwigExtension);
+        $twig->addExtension(new Monomelodies\Metaculous\TwigExtension);
         $ignore = [];
         $cnt = 10;
         echo $twig->render('test.html', compact('text', 'ignore', 'cnt'));
