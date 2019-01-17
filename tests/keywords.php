@@ -1,9 +1,9 @@
 <?php
 
-class KeywordsTest extends PHPUnit_Framework_TestCase
-{
-    public function testTop10Keywords()
-    {
+/** Test for keywords */
+return function () : Generator {
+    /** We can get the top 10 keywords */
+    yield function () {
         $text = <<<EOT
 <p>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, nam rhoncus consectetur arcu non sodales - interdum et malesuada fames ac ante ipsum primis in faucibus! Cras suscipit sed risus a eleifend, donec fermentum aliquet bibendum, quisque ac finibus tellus. Sed massa urna, tristique sed sodales vitae, tempus ut nisl. Nulla interdum condimentum metus, at interdum tortor aliquam et. Morbi quis varius quam, sit amet placerat mauris. Quisque sit amet sem dictum, tincidunt sem at, semper turpis. Mauris ut nunc ante. In vehicula viverra nisl in posuere. Pellentesque quis orci vel eros euismod accumsan vitae nec risus.
@@ -24,7 +24,7 @@ EOT;
         // Extract the top 10 words:
         $parser = new Monomelodies\Metaculous\Parser;
         $keywords = $parser->keywords($text);
-        $this->assertTrue(count($keywords) <= 10);
-    }
-}
+        assert(count($keywords) <= 10);
+    };
+};
 
