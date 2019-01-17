@@ -42,8 +42,6 @@ EOT
         $cnt = 8;
         $output = $twig->render('test.html', compact('text', 'ignore', 'cnt'));
         assert($output === <<<EOT
-<meta name="keywords" content="tortor, malesuada, placerat, quis, nisl, faucibus, nec, sodales, vitae, consectetur">
-<meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, nam rhoncus consectetur arcu non sodales - interdum et malesuada fames ac ante ipsum primis in...">
 <meta name="keywords" content="tortor, malesuada, placerat, faucibus, nec, sodales, vitae, consectetur">
 <meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, nam rhoncus consectetur arcu non sodales - interdum et malesuada fames ac ante ipsum primis in...">
 
