@@ -1,9 +1,9 @@
 <?php
 
-class TwigTest extends PHPUnit_Framework_TestCase
-{
-    public function testTop10Keywords()
-    {
+/** Test Twig integration */
+return function () : Generator {
+    /** We can call the keywords and description filters */
+    yield function () {
         $text = <<<EOT
 <p>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, nam rhoncus consectetur arcu non sodales - interdum et malesuada fames ac ante ipsum primis in faucibus! Cras suscipit sed risus a eleifend, donec fermentum aliquet bibendum, quisque ac finibus tellus. Sed massa urna, tristique sed sodales vitae, tempus ut nisl. Nulla interdum condimentum metus, at interdum tortor aliquam et. Morbi quis varius quam, sit amet placerat mauris. Quisque sit amet sem dictum, tincidunt sem at, semper turpis. Mauris ut nunc ante. In vehicula viverra nisl in posuere. Pellentesque quis orci vel eros euismod accumsan vitae nec risus.
@@ -31,11 +31,17 @@ EOT;
         $twig->addExtension(new Monomelodies\Metaculous\TwigExtension);
         $ignore = [];
         $cnt = 10;
-        echo $twig->render('test.html', compact('text', 'ignore', 'cnt'));
+        $output = $twig->render('test.html', compact('text', 'ignore', 'cnt'));
+        assert($output === <<<EOT
+<meta name="keywords" content="tortor, malesuada, placerat, quis, nisl, faucibus, nec, sodales, vitae, consectetur">
+<meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, nam rhoncus consectetur arcu non sodales - interdum et malesuada fames ac ante ipsum primis in...">
+
+EOT
+        );
         $ignore = ['nisl', 'quis', 'sed'];
         $cnt = 8;
-        echo $twig->render('test.html', compact('text', 'ignore', 'cnt'));
-        $this->expectOutputString(<<<EOT
+        $output = $twig->render('test.html', compact('text', 'ignore', 'cnt'));
+        assert($output === <<<EOT
 <meta name="keywords" content="tortor, malesuada, placerat, quis, nisl, faucibus, nec, sodales, vitae, consectetur">
 <meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, nam rhoncus consectetur arcu non sodales - interdum et malesuada fames ac ante ipsum primis in...">
 <meta name="keywords" content="tortor, malesuada, placerat, faucibus, nec, sodales, vitae, consectetur">
@@ -44,6 +50,6 @@ EOT;
 EOT
         );
 
-    }
-}
+    };
+};
 
