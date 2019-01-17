@@ -1,9 +1,9 @@
 <?php
 
-class RigTest extends PHPUnit_Framework_TestCase
-{
-    public function testRig()
-    {
+/** Tests for rigging of keywords */
+return function () : Generator {
+    /** We can manually rig a certain keyword we _know_ is important */
+    yield function () {
         $text = <<<EOT
 <p>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, nam rhoncus consectetur arcu non sodales - interdum et malesuada fames ac ante ipsum primis in faucibus! Cras suscipit sed risus a eleifend, donec fermentum aliquet bibendum, quisque ac finibus tellus. Sed massa urna, tristique sed sodales vitae, tempus ut nisl. Nulla interdum condimentum metus, at interdum tortor aliquam et. Morbi quis varius quam, sit amet placerat mauris. Quisque sit amet sem dictum, tincidunt sem at, semper turpis. Mauris ut nunc ante. In vehicula viverra nisl in posuere. Pellentesque quis orci vel eros euismod accumsan vitae nec risus.
@@ -25,7 +25,7 @@ EOT;
         $parser = new Monomelodies\Metaculous\Parser;
         $parser->rig(['ut' => 1000]);
         $keywords = $parser->keywords($text);
-        $this->assertTrue($keywords[0] == 'ut');
-    }
-}
+        assert($keywords[0] == 'ut');
+    };
+};
 
