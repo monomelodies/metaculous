@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "twig/twig": "^3"
+        "twig/twig": "^2|^3"
     },
     "require-dev": {
         "toast/unit": "^2"
