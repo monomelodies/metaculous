@@ -26,8 +26,8 @@ EOT;
 <meta name="description" content="{{ text|metaculous_description }}">
 
 EOT;
-        $loader = new Twig_Loader_Array(['test.html' => $tpl]);
-        $twig = new Twig_Environment($loader, ['cache' => false]);
+        $loader = new Twig\Loader\ArrayLoader(['test.html' => $tpl]);
+        $twig = new Twig\Environment($loader, ['cache' => false]);
         $twig->addExtension(new Monomelodies\Metaculous\TwigExtension);
         $ignore = [];
         $cnt = 10;
