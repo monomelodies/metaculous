@@ -2,10 +2,10 @@
 
 namespace Monomelodies\Metaculous;
 
-use Twig_Extension;
-use Twig_SimpleFilter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class TwigExtension extends Twig_Extension
+class TwigExtension extends AbstractExtension
 {
     private $parser;
 
@@ -24,11 +24,11 @@ class TwigExtension extends Twig_Extension
     public function getFilters()
     {
         return [
-            new Twig_SimpleFilter(
+            new TwigFilter(
                 'metaculous_description',
                 [$this->parser, 'description']
             ),
-            new Twig_SimpleFilter(
+            new TwigFilter(
                 'metaculous_keywords',
                 function ($text, $amount = 10, $ignore = []) {
                     return implode(
